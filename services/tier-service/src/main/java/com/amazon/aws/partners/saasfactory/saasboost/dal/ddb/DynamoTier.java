@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DynamoTier {
+public final class DynamoTier {
     private static final Logger LOGGER = LoggerFactory.getLogger(DynamoTier.class);
     private static final DynamoTierAttribute PRIMARY_KEY = DynamoTierAttribute.id;
     public final Map<String, AttributeValue> attributes;

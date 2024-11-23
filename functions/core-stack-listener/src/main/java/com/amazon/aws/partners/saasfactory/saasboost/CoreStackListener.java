@@ -162,9 +162,9 @@ public class CoreStackListener implements RequestHandler<SNSEvent, Object> {
     }
 
     protected static boolean filter(CloudFormationEvent cloudFormationEvent) {
-        return ("AWS::CloudFormation::Stack".equals(cloudFormationEvent.getResourceType())
+        return "AWS::CloudFormation::Stack".equals(cloudFormationEvent.getResourceType())
                 && cloudFormationEvent.getStackName().startsWith("sb-" + SAAS_BOOST_ENV + "-core-")
-                && EVENTS_OF_INTEREST.contains(cloudFormationEvent.getResourceStatus()));
+                && EVENTS_OF_INTEREST.contains(cloudFormationEvent.getResourceStatus());
     }
 
 }

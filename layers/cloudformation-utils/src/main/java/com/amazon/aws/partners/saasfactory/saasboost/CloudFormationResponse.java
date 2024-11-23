@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class CloudFormationResponse {
+public final class CloudFormationResponse {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CloudFormationResponse.class);
     private static final int MAX_RESPONSE_ATTEMPTS = 5;
@@ -134,7 +134,7 @@ public class CloudFormationResponse {
         }
 
         if (!"FAILED".equals(responseStatus)) {
-            responseBody.put("Data", responseData != null ? responseData : Collections.EMPTY_MAP);
+            responseBody.put("Data", responseData != null ? responseData : Collections.emptyMap());
         } else {
             // CloudFormation will blow up if the failure response string is longer than 256 chars
             String error = Objects.toString(responseData.getOrDefault("Reason", ""), "");

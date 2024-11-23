@@ -91,16 +91,16 @@ public class TenantServiceDALTest {
         expected.put("attributes", AttributeValue.builder().m(attributes.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
-                        entry -> entry.getKey(),
+                        Map.Entry::getKey,
                         entry -> AttributeValue.builder().s(
-                                String.valueOf(entry.getValue())
+                                entry.getValue()
                         ).build()
                 ))
         ).build());
         expected.put("resources", AttributeValue.builder().m(resources.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
-                        entry -> entry.getKey(),
+                        Map.Entry::getKey,
                         entry -> AttributeValue.builder().m(
                                 Map.of(
                                         "name", AttributeValue.builder().s(entry.getValue().getName()).build(),
@@ -114,9 +114,8 @@ public class TenantServiceDALTest {
 
         // DynamoDB marshalling
         assertEquals("Size unequal", expected.size(), actual.size());
-        expected.keySet().stream().forEach(key -> {
-            assertEquals("Value mismatch for '" + key + "'", expected.get(key), actual.get(key));
-        });
+        expected.keySet().stream().forEach(key ->
+            assertEquals("Value mismatch for '" + key + "'", expected.get(key), actual.get(key)));
 
         // Ignore read only properties from JSON serialization
         Collection<String> ignoreProperties = new HashSet<>();
@@ -137,10 +136,9 @@ public class TenantServiceDALTest {
         Map<String, Object> json = Utils.fromJson(Utils.toJson(tenant), LinkedHashMap.class);
         json.keySet().stream()
                 .filter(key -> !ignoreProperties.contains(key))
-                .map(key -> Utils.toSnakeCase(key))
-                .forEach(key -> {
-            assertTrue("Class property '" + key + "' does not exist in DynamoDB attribute map", actual.containsKey(key));
-        });
+                .map(Utils::toSnakeCase)
+                .forEach(key ->
+            assertTrue("Class property '" + key + "' does not exist in DynamoDB attribute map", actual.containsKey(key)));
     }
 
     @Test

@@ -109,7 +109,7 @@ public class ApiGatewayAuthorizer implements RequestStreamHandler {
 
     public static String apiGatewayResource(TokenAuthorizerRequest event, String method, String resource) {
         String partition = Region.of(AWS_REGION).metadata().partition().id();
-        String arn = String.format("arn:%s:execute-api:%s:%s:%s/%s/%s/%s",
+        return String.format("arn:%s:execute-api:%s:%s:%s/%s/%s/%s",
                 partition,
                 event.getRegion(),
                 event.getAccountId(),
@@ -118,6 +118,5 @@ public class ApiGatewayAuthorizer implements RequestStreamHandler {
                 method,
                 resource
         );
-        return arn;
     }
 }

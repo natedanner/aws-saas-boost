@@ -70,7 +70,7 @@ public class SetInstanceProtection implements RequestHandler<Map<String, Object>
                                             .autoScalingGroupName(autoScalingGroup)
                                     );
                                     LOGGER.info("{} instance protection on {} instances.",
-                                            ((enableInstanceProtection) ? "Enabled" : "Disabled"),
+                                            (enableInstanceProtection ? "Enabled" : "Disabled"),
                                             instancesToUpdate.size()
                                     );
                                     CloudFormationResponse.send(event, context, "SUCCESS", responseData);

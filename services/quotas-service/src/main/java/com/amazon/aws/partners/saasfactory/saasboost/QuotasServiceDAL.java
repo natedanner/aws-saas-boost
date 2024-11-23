@@ -235,7 +235,7 @@ public class QuotasServiceDAL {
 
     private Double getFargateResourceCount() {
         final long startTime = System.currentTimeMillis();
-        Double count = 0d;
+        Double count = 0D;
         try {
             Metric metric = Metric.builder()
                     .metricName("ResourceCount")
@@ -288,7 +288,7 @@ public class QuotasServiceDAL {
     }
     private Double getFargateSpotResourceCount() {
         final long startTime = System.currentTimeMillis();
-        Double count = 0d;
+        Double count = 0D;
         try {
             Metric metric = Metric.builder()
                     .metricName("ResourceCount")
@@ -341,7 +341,7 @@ public class QuotasServiceDAL {
     }
     private Double getVCpuCount() {
         final long startTime = System.currentTimeMillis();
-        Double count = 0d;
+        Double count = 0D;
         try {
             Metric metric = Metric.builder()
                     .metricName("ResourceCount")
@@ -464,9 +464,9 @@ public class QuotasServiceDAL {
         long clusters;
         try {
             List<AccountQuota> accountQuotas = rds.describeAccountAttributes().accountQuotas();
-            clusters = accountQuotas.stream().filter(quota -> quota.accountQuotaName().equals("DBClusters"))
+            clusters = accountQuotas.stream().filter(quota -> "DBClusters".equals(quota.accountQuotaName()))
                     .findFirst().map(AccountQuota::max).orElse(40L);
-            instances = accountQuotas.stream().filter(quota -> quota.accountQuotaName().equals("DBInstances"))
+            instances = accountQuotas.stream().filter(quota -> "DBInstances".equals(quota.accountQuotaName()))
                     .findFirst().map(AccountQuota::max).orElse(40L);
         } catch (SdkServiceException rdsError) {
             LOGGER.error("rds::describeAccountAttributes", rdsError);
@@ -483,7 +483,7 @@ public class QuotasServiceDAL {
         long instances;
         try {
             instances = elb.describeAccountLimits().limits().stream()
-                    .filter(x -> x.name().equals("application-load-balancers"))
+                    .filter(x -> "application-load-balancers".equals(x.name()))
                     .findFirst().map(Limit::max).map(Long::valueOf).orElse(50L);
         } catch (SdkServiceException elbError) {
             LOGGER.error("elb::describeAccountLimits", elbError);
@@ -519,9 +519,9 @@ public class QuotasServiceDAL {
     public static class Service {
         private String serviceCode;
         private String serviceName;
-        private Double quotaValue = 0d;
+        private Double quotaValue = 0D;
         private Double serviceCount;
-        private boolean passed = false;
+        private boolean passed;
 
         public Service(String serviceCode, String serviceName, Double serviceCount) {
             this.serviceCode = serviceCode;
@@ -540,7 +540,7 @@ public class QuotasServiceDAL {
 
     public static class QuotaCheck {
         private List<Service> serviceList;
-        private boolean passed = false;
+        private boolean passed;
         private String message = "";
 
         public void setServiceList(List<Service> serviceList) {

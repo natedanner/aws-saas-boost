@@ -106,8 +106,8 @@ public class SaaSBoostInstall {
     private String lambdaSourceFolder = "lambdas";
     private String stackName;
     private Map<String, String> baseStackDetails = new HashMap<>();
-    private boolean useAnalyticsModule = false;
-    private boolean useQuickSight = false;
+    private boolean useAnalyticsModule;
+    private boolean useQuickSight;
     private String quickSightUsername;
     private String quickSightUserArn;
 
@@ -307,8 +307,8 @@ public class SaaSBoostInstall {
             System.out.print("Enter the identity provider to use for system users (Cognito or Keycloak) Press Enter for 'Cognito': ");
             systemIdentityProvider = Keyboard.readString();
             if (isNotBlank(systemIdentityProvider)) {
-                if (systemIdentityProvider.toUpperCase().equals("COGNITO")
-                        || systemIdentityProvider.toUpperCase().equals("KEYCLOAK")) {
+                if ("COGNITO".equals(systemIdentityProvider.toUpperCase())
+                        || "KEYCLOAK".equals(systemIdentityProvider.toUpperCase())) {
                     systemIdentityProvider = systemIdentityProvider.toUpperCase();
                     LOGGER.info("Setting Identity Provider = [{}]", systemIdentityProvider);
                     break;
@@ -1204,7 +1204,7 @@ public class SaaSBoostInstall {
             for (String requiredOutput : Arrays.asList("RedshiftDatabaseName", "RedshiftEndpointAddress", "RedshiftCluster", "RedshiftEndpointPort", "MetricsBucket")) {
                 if (outputs.get(requiredOutput) == null) {
                     outputMessage("Error, CloudFormation stack: " + stackName + " missing required output: " + requiredOutput);
-                    outputMessage(("Aborting the installation due to error"));
+                    outputMessage("Aborting the installation due to error");
                     System.exit(2);
                 }
             }
@@ -1381,7 +1381,7 @@ public class SaaSBoostInstall {
             throw new RuntimeException(ioe);
         }
         try (Stream<Path> stream = Files.walk(resourcesDir.resolve("keycloak"))) {
-            Set<Path> keycloakResources = stream.filter(file -> Files.isRegularFile(file)).collect(Collectors.toSet());
+            Set<Path> keycloakResources = stream.filter(Files::isRegularFile).collect(Collectors.toSet());
             for (Path keycloakResource : keycloakResources) {
                 Path remotePath = resourcesDir.relativize(keycloakResource);
                 LOGGER.info("Uploading Keycloak resource to S3 " + keycloakResource.toString() + " -> " + remotePath);
@@ -1490,9 +1490,9 @@ public class SaaSBoostInstall {
             // Follows CloudFormation stack name rules but limits to 10 characters
             valid = envName.matches("^[a-zA-Z](?:[a-zA-Z0-9-]){0,9}$");
             if (valid) {
-                valid = (!envName.equalsIgnoreCase("aws")
-                        && !envName.equalsIgnoreCase("amazon")
-                        && !envName.equalsIgnoreCase("cognito"));
+                valid = !"aws".equalsIgnoreCase(envName)
+                        && !"amazon".equalsIgnoreCase(envName)
+                        && !"cognito".equalsIgnoreCase(envName);
             }
         }
         return valid;
@@ -1832,7 +1832,7 @@ public class SaaSBoostInstall {
         boolean exists = false;
         try {
             DescribeStacksResponse response = cfn.describeStacks(request -> request.stackName(stackName));
-            exists = (response.hasStacks() && !response.stacks().isEmpty());
+            exists = response.hasStacks() && !response.stacks().isEmpty();
         } catch (SdkServiceException cfnError) {
             if (!cfnError.getMessage().contains("does not exist")) {
                 LOGGER.error("cloudformation:DescribeStacks error", cfnError);
@@ -2123,11 +2123,11 @@ public class SaaSBoostInstall {
     }
 
     public static boolean isWindows() {
-        return (OS.contains("win"));
+        return OS.contains("win");
     }
 
     public static boolean isMac() {
-        return (OS.contains("mac"));
+        return OS.contains("mac");
     }
 
     /**

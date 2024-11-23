@@ -384,7 +384,7 @@ public class SettingsService implements RequestHandler<Map<String, Object>, APIG
 
                 Utils.publishEvent(eventBridge, SAAS_BOOST_EVENT_BUS, "saas-boost",
                         AppConfigEvent.APP_CONFIG_CHANGED.detailType(),
-                        Collections.EMPTY_MAP
+                        Collections.emptyMap()
                 );
 
                 if (AppConfigHelper.isBillingFirstTime(currentAppConfig, updatedAppConfig)) {
@@ -472,7 +472,7 @@ public class SettingsService implements RequestHandler<Map<String, Object>, APIG
                         // due to changes in the app config
                         Utils.publishEvent(eventBridge, SAAS_BOOST_EVENT_BUS, "saas-boost",
                                 AppConfigEvent.APP_CONFIG_CHANGED.detailType(),
-                                Collections.EMPTY_MAP
+                                Collections.emptyMap()
                         );
                     }
 
@@ -619,7 +619,7 @@ public class SettingsService implements RequestHandler<Map<String, Object>, APIG
                         LOGGER.info("Updated app config with provisioned tenants");
                         Utils.publishEvent(eventBridge, SAAS_BOOST_EVENT_BUS, "saas-boost",
                                 AppConfigEvent.APP_CONFIG_UPDATE_COMPLETED.detailType(),
-                                Collections.EMPTY_MAP);
+                                Collections.emptyMap());
                     }
                 } else {
                     LOGGER.info("No app config changes to process");

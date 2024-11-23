@@ -57,9 +57,9 @@ public final class AttachCapacityProviderRequestHandler implements Callable<Hand
                 || "Update".equalsIgnoreCase(requestContext.requestType)) {
             LOGGER.info("Attaching capacity provider {} to ecs cluster {} for tenant {}", 
                     requestContext.capacityProvider, requestContext.ecsCluster, requestContext.tenantId);
-            result = atomicallyUpdateCapacityProviders((capacityProviders) -> {
+            result = atomicallyUpdateCapacityProviders(capacityProviders -> {
                 if (!capacityProviders.contains(requestContext.capacityProvider)) {
-                    List<String> modifiedCapacityProviders = new ArrayList<String>(capacityProviders);
+                    List<String> modifiedCapacityProviders = new ArrayList<>(capacityProviders);
                     modifiedCapacityProviders.add(requestContext.capacityProvider);
                     return modifiedCapacityProviders;
                 }
@@ -69,11 +69,9 @@ public final class AttachCapacityProviderRequestHandler implements Callable<Hand
             // unclear whether we need this.. commenting it out for testing.
             LOGGER.info("Detaching capacity provider {} from ecs cluster {} for tenant {}", 
                     requestContext.capacityProvider, requestContext.ecsCluster, requestContext.tenantId);
-            result = atomicallyUpdateCapacityProviders((capacityProviders) -> {
-                return capacityProviders.stream()
-                        .filter((capacityProvider) -> !capacityProvider.equals(requestContext.capacityProvider))
-                        .collect(Collectors.toList());
-            });
+            result = atomicallyUpdateCapacityProviders(capacityProviders -> capacityProviders.stream()
+                        .filter(capacityProvider -> !capacityProvider.equals(requestContext.capacityProvider))
+                        .collect(Collectors.toList()));
             result.setSucceeded();
         } else {
             LOGGER.error("FAILED unknown requestType {}", requestContext.requestType);

@@ -33,7 +33,7 @@ public enum UpdateAction {
     RESOURCES,
     SERVICES;
 
-    private Set<String> targets = new HashSet<String>();
+    private final Set<String> targets = new HashSet<>();
 
     /**
      * Adds a new target to this <code>UpdateAction</code>.

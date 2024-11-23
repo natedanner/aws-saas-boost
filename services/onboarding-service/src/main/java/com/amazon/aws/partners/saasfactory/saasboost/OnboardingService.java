@@ -1819,8 +1819,7 @@ public class OnboardingService {
                 API_TRUST_ROLE,
                 context.getAwsRequestId()
         );
-        Map<String, Object> appConfig = Utils.fromJson(getAppConfigResponseBody, LinkedHashMap.class);
-        return appConfig;
+        return Utils.fromJson(getAppConfigResponseBody, LinkedHashMap.class);
     }
 
     protected String getSetting(Context context, String setting) {
@@ -1899,8 +1898,7 @@ public class OnboardingService {
                 API_TRUST_ROLE,
                 context.getAwsRequestId()
         );
-        Map<String, Object> tenant = Utils.fromJson(getTenantResponseBody, LinkedHashMap.class);
-        return tenant;
+        return Utils.fromJson(getTenantResponseBody, LinkedHashMap.class);
     }
 
     protected List<Map<String, Object>> getProvisionedTenants(Context context) {

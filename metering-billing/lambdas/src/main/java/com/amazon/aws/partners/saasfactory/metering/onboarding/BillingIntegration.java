@@ -36,13 +36,13 @@ import java.util.*;
 
 public class BillingIntegration implements RequestHandler<EventBridgeEvent, Object> {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(BillingIntegration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BillingIntegration.class);
     private static final String SAAS_BOOST_EVENT_BUS = System.getenv("SAAS_BOOST_EVENT_BUS");
     private static final String BILL_PUBLISH_EVENT = System.getenv("BILL_PUBLISH_EVENT");
     private static final String API_GATEWAY_HOST = System.getenv("API_GATEWAY_HOST");
     private static final String API_GATEWAY_STAGE = System.getenv("API_GATEWAY_STAGE");
     private static final String API_TRUST_ROLE = System.getenv("API_TRUST_ROLE");
-    private EventBridgeClient eventBridge;
+    private final EventBridgeClient eventBridge;
 
     public BillingIntegration() {
         long startTimeMillis = System.currentTimeMillis();

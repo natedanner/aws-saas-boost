@@ -36,8 +36,8 @@ import static com.amazon.aws.partners.saasfactory.metering.common.Constants.*;
 public class OnboardTenantProduct implements RequestHandler<Map<String, Object>, Object> {
 
     private final DynamoDbClient ddb;
-    private final static Logger LOGGER = LoggerFactory.getLogger(OnboardTenantProduct.class);
-    private final static String TABLE_NAME = System.getenv(TABLE_ENV_VARIABLE);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OnboardTenantProduct.class);
+    private static final String TABLE_NAME = System.getenv(TABLE_ENV_VARIABLE);
 
     public OnboardTenantProduct() {
         long startTimeMillis = System.currentTimeMillis();

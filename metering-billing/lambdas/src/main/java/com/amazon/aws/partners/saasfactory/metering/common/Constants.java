@@ -68,7 +68,7 @@ public final class Constants {
     public static final String TENANT_ID_EXPRESSION_VALUE = ":tenantID";
     public static final String TENANT_PREFIX = "TENANT";
     public static final String UUID_DELIMITER = "-";
-    private final static Region AWS_REGION = Region.of(System.getenv(SdkSystemSetting.AWS_REGION.environmentVariable()));
+    private static final Region AWS_REGION = Region.of(System.getenv(SdkSystemSetting.AWS_REGION.environmentVariable()));
 
     public static String getEnvVariable(String envVariableName, Logger logger) {
         String envVariableValue = System.getenv(envVariableName);

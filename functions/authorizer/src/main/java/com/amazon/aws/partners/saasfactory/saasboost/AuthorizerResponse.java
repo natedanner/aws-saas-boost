@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonDeserialize(builder = AuthorizerResponse.Builder.class)
-public class AuthorizerResponse {
+public final class AuthorizerResponse {
 
     private final String principalId;
     private final PolicyDocument policyDocument;

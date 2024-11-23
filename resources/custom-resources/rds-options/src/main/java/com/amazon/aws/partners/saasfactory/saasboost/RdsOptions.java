@@ -110,7 +110,7 @@ public class RdsOptions implements RequestHandler<Map<String, Object>, Object> {
                                     );
                                     marker = orderableResponse.marker();
                                     String size = Objects.toString(orderableResponse.orderableDBInstanceOptions().size());
-                                    String numOrderableOptions = (Utils.isNotEmpty(marker) ? size + "+" : size);
+                                    String numOrderableOptions = Utils.isNotEmpty(marker) ? size + "+" : size;
                                     LOGGER.info("{} {} {} has {} orderable instance options",
                                             AWS_REGION, engine.getEngine(), dbVersion.engineVersion(), numOrderableOptions
                                     );
@@ -233,7 +233,7 @@ public class RdsOptions implements RequestHandler<Map<String, Object>, Object> {
                 AttributeValue instanceDetails = AttributeValue.builder().m(
                         instanceEntry.getValue().entrySet().stream()
                             .collect(Collectors.toMap(
-                                entry -> entry.getKey(),
+                                Map.Entry::getKey,
                                 entry -> AttributeValue.builder().s(entry.getValue()).build())))
                         .build();
                 instancesMap.put(instanceEntry.getKey().toString(), instanceDetails);

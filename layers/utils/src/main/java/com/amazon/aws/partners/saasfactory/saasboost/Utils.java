@@ -50,7 +50,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class Utils {
+public final class Utils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
     private static final String GIT_PROPERTIES_FILENAME = "git.properties";
@@ -234,7 +234,7 @@ public class Utils {
 
         }
 
-        C client = builder
+        return builder
                 .httpClientBuilder(UrlConnectionHttpClient.builder())
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .region(region)
@@ -250,7 +250,6 @@ public class Utils {
                         .build()
                 )
                 .build();
-        return client;
     }
 
     public static void publishEvent(EventBridgeClient eventBridge, String eventBus, String source, String detailType,
@@ -282,11 +281,11 @@ public class Utils {
     }
 
     public static boolean isEmpty(String str) {
-        return (str == null || str.isEmpty());
+        return str == null || str.isEmpty();
     }
 
     public static boolean isBlank(String str) {
-        return (str == null || str.isBlank());
+        return str == null || str.isBlank();
     }
 
     public static boolean isNotEmpty(String str) {

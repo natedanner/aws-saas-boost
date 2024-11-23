@@ -84,8 +84,8 @@ public class CustomizeCognitoUi implements RequestHandler<Map<String, Object>, O
                                 .build());
                         // Customize the background colors to match the SaaS Boost branding
                         StringBuilder css = new StringBuilder();
-                        css.append(".banner-customizable {background-color: " + ADMIN_WEB_BG_COLOR + ";}\n");
-                        css.append(".submitButton-customizable {background-color: " + ADMIN_WEB_BG_COLOR + ";}");
+                        css.append(".banner-customizable {background-color: ").append(ADMIN_WEB_BG_COLOR).append(";}\n");
+                        css.append(".submitButton-customizable {background-color: ").append(ADMIN_WEB_BG_COLOR).append(";}");
                         // Extract just the logo image from the ZIP archive
                         SdkBytes logo = SdkBytes.fromByteArray(unzip(responseInputStream, ADMIN_WEB_LOGO));
                         waitForActiveDomain(userPoolDomain);

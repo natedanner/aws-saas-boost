@@ -211,7 +211,7 @@ public class TierService implements RequestHandler<Map<String, Object>, APIGatew
 
     public void enforceSingleDefaultTier(Tier defaultTier) {
         List<Tier> defaultTiers = store.listTiers().stream()
-                .filter(tier -> tier.defaultTier())
+                .filter(Tier::defaultTier)
                 .collect(Collectors.toList());
         for (Tier t : defaultTiers) {
             if (!t.getId().equals(defaultTier.getId())) {

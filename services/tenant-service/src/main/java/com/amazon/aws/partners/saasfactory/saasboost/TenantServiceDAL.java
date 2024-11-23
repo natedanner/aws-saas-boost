@@ -384,7 +384,7 @@ public class TenantServiceDAL {
             item.put("attributes", AttributeValue.builder().m(tenant.getAttributes().entrySet()
                             .stream()
                             .collect(Collectors.toMap(
-                                    entry -> entry.getKey(),
+                                    Map.Entry::getKey,
                                     entry -> AttributeValue.builder().s(entry.getValue()).build()
                             ))
                     ).build()
@@ -394,7 +394,7 @@ public class TenantServiceDAL {
             item.put("resources", AttributeValue.builder().m(tenant.getResources().entrySet()
                             .stream()
                             .collect(Collectors.toMap(
-                                    entry -> entry.getKey(),
+                                    Map.Entry::getKey,
                                     entry -> AttributeValue.builder().m(
                                             Map.of(
                                                     "name", AttributeValue.builder().s(entry.getValue().getName()).build(),
@@ -464,7 +464,7 @@ public class TenantServiceDAL {
                     tenant.setAttributes(item.get("attributes").m().entrySet()
                             .stream()
                             .collect(Collectors.toMap(
-                                    entry -> entry.getKey(),
+                                    Map.Entry::getKey,
                                     entry -> entry.getValue().s()
                             ))
                     );
@@ -478,7 +478,7 @@ public class TenantServiceDAL {
                     tenant.setResources(item.get("resources").m().entrySet()
                             .stream()
                             .collect(Collectors.toMap(
-                                    entry -> entry.getKey(),
+                                    Map.Entry::getKey,
                                     entry -> new Tenant.Resource(entry.getValue().m().get("name").s(),
                                             entry.getValue().m().get("arn").s(),
                                             entry.getValue().m().get("consoleUrl").s())

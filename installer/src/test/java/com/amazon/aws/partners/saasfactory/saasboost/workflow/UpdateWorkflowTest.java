@@ -130,7 +130,7 @@ public class UpdateWorkflowTest {
         assertEquals(expectedActions, actualActions);
         // the first item in the set iterator should always be LAYERS
         // (meaning we update layers first) regardless of changedPath ordering
-        assertTrue(actualActions.iterator().next().name().equals("LAYERS"));
+        assertTrue("LAYERS".equals(actualActions.iterator().next().name()));
     }
 
     @Test

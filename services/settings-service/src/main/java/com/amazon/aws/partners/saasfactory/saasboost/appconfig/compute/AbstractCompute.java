@@ -99,12 +99,12 @@ public abstract class AbstractCompute {
         }
 
         AbstractCompute other = (AbstractCompute) obj;
-        return (super.equals(other)
+        return super.equals(other)
                 && Utils.nullableEquals(containerPort, other.containerPort)
                 && Utils.nullableEquals(containerRepo, other.containerRepo)
                 && Utils.nullableEquals(containerTag, other.containerTag)
                 && Utils.nullableEquals(healthCheckUrl, other.healthCheckUrl)
-                && Utils.nullableEquals(operatingSystem, other.operatingSystem));
+                && Utils.nullableEquals(operatingSystem, other.operatingSystem);
     }
 
     @Override

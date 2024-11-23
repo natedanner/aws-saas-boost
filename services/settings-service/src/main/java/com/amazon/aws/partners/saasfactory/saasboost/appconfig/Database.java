@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(builder = Database.Builder.class)
-public class Database {
+public final class Database {
 
     private final RdsEngine engine;
     private final String version;
@@ -129,8 +129,7 @@ public class Database {
             }
         }
 
-        return (
-                ((version == null && other.version == null) || (version != null && version.equals(other.version)))
+        return ((version == null && other.version == null) || (version != null && version.equals(other.version)))
                 && ((family == null && other.family == null) || (family != null && family.equals(other.family)))
                 && ((database == null && other.database == null)
                     || (database != null && database.equalsIgnoreCase(other.database)))
@@ -141,7 +140,7 @@ public class Database {
                 && ((bootstrapFilename == null && other.bootstrapFilename == null)
                     || (bootstrapFilename != null && bootstrapFilename.equals(other.bootstrapFilename)))
                 && (engine == other.engine)
-                && ((tiers == null && other.tiers == null) || tiersEqual));
+                && ((tiers == null && other.tiers == null) || tiersEqual);
     }
 
     @Override

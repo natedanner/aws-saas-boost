@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.Objects;
 
 @JsonDeserialize(builder = ServiceConfig.Builder.class)
-public class ServiceConfig {
+public final class ServiceConfig {
 
     @JsonProperty("public")
     private final Boolean publiclyAddressable;

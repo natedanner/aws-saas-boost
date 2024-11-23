@@ -23,12 +23,12 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.Objects;
 
 public abstract class AbstractFsxFilesystemTierConfig extends AbstractFilesystemTierConfig {
-    
-    private Integer storageGb;
-    private Integer throughputMbs;
-    private Integer backupRetentionDays;
-    private String dailyBackupTime;
-    private String weeklyMaintenanceTime;
+
+    private final Integer storageGb;
+    private final Integer throughputMbs;
+    private final Integer backupRetentionDays;
+    private final String dailyBackupTime;
+    private final String weeklyMaintenanceTime;
 
     protected AbstractFsxFilesystemTierConfig(Builder b) {
         super(b);

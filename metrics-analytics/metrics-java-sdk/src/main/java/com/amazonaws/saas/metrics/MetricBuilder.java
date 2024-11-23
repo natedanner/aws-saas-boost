@@ -16,7 +16,7 @@
 package com.amazonaws.saas.metrics;
 
 public class MetricBuilder {
-    private Metric metric = new Metric();
+    private final Metric metric = new Metric();
 
     public MetricBuilder withName(String name) {
         this.metric.setName(name);

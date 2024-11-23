@@ -222,7 +222,7 @@ public class AwsClientBuilderFactory {
         return new Builder();
     }
 
-    public static class Builder {
+    public static final class Builder {
         private Region defaultRegion;
         private AwsCredentialsProvider awsCredentialsProvider;
 

@@ -128,7 +128,7 @@ public class Test {
 
 
 
-        Map<String, Object> testMap = new HashMap<String, Object>();
+        Map<String, Object> testMap = new HashMap<>();
         testMap.put("body", body1);
 
 /*
@@ -151,7 +151,7 @@ public class Test {
         valMap.put("tenantId", "c18e5a42-c54d-42ef-b108-73f3e9c8f917");
 
         ms = new MetricService();
-        testMap = new HashMap<String, Object>();
+        testMap = new HashMap<>();
         testMap.put("pathParameters", valMap);
 
         APIGatewayProxyResponseEvent responseEvent = ms.queryAccessLogs(testMap, null);

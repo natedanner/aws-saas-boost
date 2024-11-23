@@ -53,7 +53,7 @@ public final class DatabaseTierConfig {
             return false;
         }
         final DatabaseTierConfig other = (DatabaseTierConfig) obj;
-        return (instance == other.instance);
+        return instance == other.instance;
     }
 
     @Override

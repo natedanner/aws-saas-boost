@@ -42,10 +42,10 @@ import java.util.Map;
 
 public class QuotaTest {
 
-    private final static Region AWS_REGION = Region.of(System.getenv(SdkSystemSetting.AWS_REGION.environmentVariable()));
+    private static final Region AWS_REGION = Region.of(System.getenv(SdkSystemSetting.AWS_REGION.environmentVariable()));
 
 
-    public static void main(String args[]) throws URISyntaxException {
+    public static void main(String[] args) throws URISyntaxException {
 
         //SupportClient client = createClient();
        // getServices();
@@ -117,11 +117,9 @@ public class QuotaTest {
                 Double quotaValue = quotasMap.get(entry.getKey());
                 service.setQuotaValue(quotaValue);
                 if (quotaValue.compareTo(entry.getValue()) < 1) {
-                    builder.append("\nError, number of deployed " + entry.getKey() + " is " + entry.getValue()
-                            + " and Service Quota is " + quotaValue);
+                    builder.append("\nError, number of deployed ").append(entry.getKey()).append(" is ").append(entry.getValue()).append(" and Service Quota is ").append(quotaValue);
                 } else {
-                    builder.append("\nInfo, number of deployed " + entry.getKey() + " is "  + entry.getValue()
-                            + " and Service Quota is " + quotaValue);
+                    builder.append("\nInfo, number of deployed ").append(entry.getKey()).append(" is ").append(entry.getValue()).append(" and Service Quota is ").append(quotaValue);
                 }
             } else {
                 System.out.println("No Quota found for key: " + entry.getKey());
@@ -134,24 +132,22 @@ public class QuotaTest {
 
          Region region = Region.US_EAST_1;
          // static ApplicationAutoScalingClient aaClient = (ApplicationAutoScalingClient) ApplicationAutoScalingClient.builder() ;
-         ServiceQuotasClient client1 = ServiceQuotasClient.builder()
+         return ServiceQuotasClient.builder()
                  .httpClientBuilder(UrlConnectionHttpClient.builder())
 //                .region(region)
                  .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                  .build();
-         return client1;
      }
 
     private static RdsClient createRdsClient() throws URISyntaxException {
 
-        RdsClient rdsClient = RdsClient.builder()
+        return RdsClient.builder()
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .region(AWS_REGION)
                 .httpClientBuilder(UrlConnectionHttpClient.builder())
                 .endpointOverride(new URI("https://rds." + AWS_REGION.id() + "." + Utils.endpointSuffix(AWS_REGION.id())))
                 .overrideConfiguration(ClientOverrideConfiguration.builder().build())
                 .build();
-        return rdsClient;
     }
 
     public static int getRdsClusters() throws URISyntaxException {
@@ -168,14 +164,13 @@ public class QuotaTest {
 
     private static ElasticLoadBalancingV2Client createAlbClient() throws URISyntaxException {
 
-        ElasticLoadBalancingV2Client client = ElasticLoadBalancingV2Client.builder()
+        return ElasticLoadBalancingV2Client.builder()
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .region(AWS_REGION)
                 .httpClientBuilder(UrlConnectionHttpClient.builder())
                 .endpointOverride(new URI("https://elasticloadbalancing." + AWS_REGION.id() + "." + Utils.endpointSuffix(AWS_REGION.id())))
                 .overrideConfiguration(ClientOverrideConfiguration.builder().build())
                 .build();
-        return client;
     }
 
     public static int getAlbs() throws URISyntaxException {
@@ -210,14 +205,13 @@ public class QuotaTest {
     */
     private static Ec2Client createEc2Client() throws URISyntaxException {
 
-        Ec2Client client = Ec2Client.builder()
+        return Ec2Client.builder()
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .region(AWS_REGION)
                 .httpClientBuilder(UrlConnectionHttpClient.builder())
                 .endpointOverride(new URI("https://ec2." + AWS_REGION.id() + "." + Utils.endpointSuffix(AWS_REGION.id())))
                 .overrideConfiguration(ClientOverrideConfiguration.builder().build())
                 .build();
-        return client;
     }
 
     public static int getVpcs() throws URISyntaxException {

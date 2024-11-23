@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.Objects;
 
 @JsonDeserialize(builder = EcsComputeTier.Builder.class)
-public class EcsComputeTier extends AbstractComputeTier {
+public final class EcsComputeTier extends AbstractComputeTier {
 
     private EcsComputeTier(Builder b) {
         super(b);

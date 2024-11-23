@@ -58,9 +58,9 @@ public class SettingsServiceDAL {
     static final Pattern SAAS_BOOST_APP_PATTERN = Pattern.compile("^" + PARAMETER_STORE_PREFIX + APP_BASE_PATH + "(.+)$");
 
     private final ParameterStoreFacade parameterStore;
-    private AcmClient acm;
+    private final AcmClient acm;
     private DynamoDbClient ddb;
-    private Route53Client route53;
+    private final Route53Client route53;
 
     public SettingsServiceDAL() {
         final long startTimeMillis = System.currentTimeMillis();
@@ -226,7 +226,7 @@ public class SettingsServiceDAL {
         return allHostedZones;
     }
 
-    private static final Comparator<Map<String, String>> INSTANCE_TYPE_COMPARATOR = ((instance1, instance2) -> {
+    private static final Comparator<Map<String, String>> INSTANCE_TYPE_COMPARATOR = (instance1, instance2) -> {
         // T's before M's before R's
         int compare = 0;
         char type1 = instance1.get("instance").charAt(0);
@@ -243,15 +243,15 @@ public class SettingsServiceDAL {
             }
         }
         return compare;
-    });
+    };
 
-    private static final Comparator<Map<String, String>> INSTANCE_GENERATION_COMPARATOR = ((instance1, instance2) -> {
+    private static final Comparator<Map<String, String>> INSTANCE_GENERATION_COMPARATOR = (instance1, instance2) -> {
         Integer gen1 = Integer.valueOf(instance1.get("instance").substring(1, 2));
         Integer gen2 = Integer.valueOf(instance2.get("instance").substring(1, 2));
         return gen1.compareTo(gen2);
-    });
+    };
 
-    private static final Comparator<Map<String, String>> INSTANCE_SIZE_COMPARATOR = ((instance1, instance2) -> {
+    private static final Comparator<Map<String, String>> INSTANCE_SIZE_COMPARATOR = (instance1, instance2) -> {
         String size1 = instance1.get("instance").substring(3);
         String size2 = instance2.get("instance").substring(3);
         List<String> sizes = Arrays.asList(
@@ -266,7 +266,7 @@ public class SettingsServiceDAL {
                 "24XL"
         );
         return Integer.compare(sizes.indexOf(size1), sizes.indexOf(size2));
-    });
+    };
 
     public static final Comparator<Map<String, String>> RDS_INSTANCE_COMPARATOR = INSTANCE_TYPE_COMPARATOR
             .thenComparing(INSTANCE_GENERATION_COMPARATOR)
@@ -448,7 +448,7 @@ public class SettingsServiceDAL {
 
             setting = Setting.builder()
                     .name(settingName) // name now might be <serviceName>/SETTING
-                    .value(!"N/A".equals(parameter.value()) ? parameter.value() : "")
+                    .value("N/A".equals(parameter.value()) ? "" : parameter.value())
                     .readOnly(!SettingsService.READ_WRITE_PARAMS.contains(settingName))
                     .secure(ParameterType.SECURE_STRING == parameter.type())
                     .version(parameter.version())
@@ -462,13 +462,12 @@ public class SettingsServiceDAL {
             throw new RuntimeException("Can't create Parameter Store parameter with invalid Setting name");
         }
         String parameterName = PARAMETER_STORE_PREFIX + setting.getName();
-        String parameterValue = (Utils.isEmpty(setting.getValue())) ? "N/A" : setting.getValue();
-        Parameter parameter = Parameter.builder()
+        String parameterValue = Utils.isEmpty(setting.getValue()) ? "N/A" : setting.getValue();
+        return Parameter.builder()
                 .type(setting.isSecure() ? ParameterType.SECURE_STRING : ParameterType.STRING)
                 .name(parameterName)
                 .value(parameterValue)
                 .build();
-        return parameter;
     }
 
     public static Setting fromAppParameterStore(Parameter parameter) {
@@ -488,7 +487,7 @@ public class SettingsServiceDAL {
             }
             setting = Setting.builder()
                     .name(APP_BASE_PATH + settingName)
-                    .value(!"N/A".equals(parameter.value()) ? parameter.value() : "")
+                    .value("N/A".equals(parameter.value()) ? "" : parameter.value())
                     .readOnly(false)
                     .secure(ParameterType.SECURE_STRING == parameter.type())
                     .version(parameter.version())

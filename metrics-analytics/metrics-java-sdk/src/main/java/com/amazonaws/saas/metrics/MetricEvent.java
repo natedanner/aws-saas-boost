@@ -25,9 +25,9 @@ import java.util.Objects;
 
 public class MetricEvent {
 
-    public static enum Type {
+    public enum Type {
         Application,
-        System;
+        System
     }
 
     private MetricEvent.Type type;

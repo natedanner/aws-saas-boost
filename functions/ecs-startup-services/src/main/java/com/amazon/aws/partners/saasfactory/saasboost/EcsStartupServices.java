@@ -154,8 +154,7 @@ public class EcsStartupServices implements RequestHandler<Map<String, Object>, O
                 API_TRUST_ROLE,
                 context.getAwsRequestId()
         );
-        Map<String, Object> appConfig = Utils.fromJson(getAppConfigResponseBody, LinkedHashMap.class);
-        return appConfig;
+        return Utils.fromJson(getAppConfigResponseBody, LinkedHashMap.class);
     }
 
     protected List<Map<String, Object>> getProvisionedTenants(Context context) {
@@ -173,7 +172,6 @@ public class EcsStartupServices implements RequestHandler<Map<String, Object>, O
                 API_TRUST_ROLE,
                 context.getAwsRequestId()
         );
-        List<Map<String, Object>> tenants = Utils.fromJson(getTenantsResponseBody, ArrayList.class);
-        return tenants;
+        return Utils.fromJson(getTenantsResponseBody, ArrayList.class);
     }
 }

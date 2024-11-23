@@ -264,7 +264,7 @@ public class MetricServiceDAL {
         queryResult.setId(query.getId());
         try {
             if (query.getTenants().size() != 1) {
-                throw new RuntimeException(("queryTenantMetrics: query JSON must have single item in tenants!"));
+                throw new RuntimeException("queryTenantMetrics: query JSON must have single item in tenants!");
             }
 
             //build query
@@ -356,17 +356,7 @@ public class MetricServiceDAL {
                 metricCol = "\n";
             }
 
-            String query = new StringBuilder().append("SELECT\n")
-                    .append("concat(url_extract_path(request_url), '+', request_verb) AS url")
-                    .append(metricCol)
-                    .append("FROM \"")
-                    .append(ACCESS_LOGS_TABLE)
-                    .append("\"\n")
-                    .append(where)
-                    .append("GROUP BY concat(url_extract_path(request_url), '+', request_verb)\n")
-                    .append("ORDER BY 2 DESC\n")
-                    .append("LIMIT 10;")
-                    .toString();
+            String query = "SELECT\n" + "concat(url_extract_path(request_url), '+', request_verb) AS url" + metricCol + "FROM \"" + ACCESS_LOGS_TABLE + "\"\n" + where + "GROUP BY concat(url_extract_path(request_url), '+', request_verb)\n" + "ORDER BY 2 DESC\n" + "LIMIT 10;";
 
             LOGGER.info("queryAccessLogs: athena query \n" + query);
 
@@ -648,7 +638,7 @@ public class MetricServiceDAL {
             } catch (Exception e) {
                 LOGGER.error("getTaskMaxCapacity: Unable to describe scalable target: ");
                 LOGGER.error(e.getMessage());
-                throw new RuntimeException(("getTaskMaxCapacity: Error with task capacity metrics"));
+                throw new RuntimeException("getTaskMaxCapacity: Error with task capacity metrics");
             }
         } while (Utils.isNotEmpty(nextToken));
         return capacityMap;

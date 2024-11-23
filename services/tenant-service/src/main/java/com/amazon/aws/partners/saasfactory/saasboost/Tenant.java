@@ -179,8 +179,7 @@ public class Tenant {
                 }
             }
         }
-        return (
-                ((id == null && other.id == null) || (id != null && id.equals(other.id)))
+        return ((id == null && other.id == null) || (id != null && id.equals(other.id)))
                 && ((created == null && other.created == null) || (created != null && created.equals(other.created)))
                 && ((modified == null && other.modified == null) || (modified != null && modified.equals(other.modified)))
                 && (active == other.active)
@@ -191,7 +190,7 @@ public class Tenant {
                 && ((hostname == null && other.hostname == null) || (hostname != null && hostname.equals(other.hostname)))
                 && ((billingPlan == null && other.billingPlan == null) || (billingPlan != null && billingPlan.equals(other.billingPlan)))
                 && ((attributes == null && other.attributes == null) || attributesEqual)
-                && ((resources == null && other.resources == null) || resourcesEqual));
+                && ((resources == null && other.resources == null) || resourcesEqual);
     }
 
     @Override
@@ -255,10 +254,9 @@ public class Tenant {
                 return false;
             }
             final Resource other = (Resource) obj;
-            return (
-                    ((name == null && other.name == null) || (name != null && name.equals(other.name)))
+            return ((name == null && other.name == null) || (name != null && name.equals(other.name)))
                     && ((arn == null && other.arn == null) || (arn != null && arn.equals(other.arn)))
-                    && ((consoleUrl == null && other.consoleUrl == null) || (consoleUrl != null && consoleUrl.equals(other.consoleUrl))));
+                    && ((consoleUrl == null && other.consoleUrl == null) || (consoleUrl != null && consoleUrl.equals(other.consoleUrl)));
         }
 
         @Override

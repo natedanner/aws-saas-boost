@@ -24,7 +24,7 @@ import java.util.Objects;
 
 public abstract class AbstractFsxFilesystem extends AbstractFilesystem {
 
-    private String windowsMountDrive;
+    private final String windowsMountDrive;
     private final Boolean configureManagedAd;
 
     protected AbstractFsxFilesystem(Builder b) {

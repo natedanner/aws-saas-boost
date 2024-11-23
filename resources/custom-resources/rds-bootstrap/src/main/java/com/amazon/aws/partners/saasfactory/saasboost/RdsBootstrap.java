@@ -94,9 +94,9 @@ public class RdsBootstrap implements RequestHandler<Map<String, Object>, Object>
 
                     // Unlike MySQL/MariaDB, you have to specify a database name to get a connection to postgres...
                     // And you should connect to dbo.master in SQL Server to check for a database
-                    if (type.equals("postgresql")) {
+                    if ("postgresql".equals(type)) {
                         dbCheck = "template1";
-                    } else if (type.equals("sqlserver")) {
+                    } else if ("sqlserver".equals(type)) {
                         dbCheck = "master";
                     }
 

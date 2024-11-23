@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MetricEventLogger {
+public final class MetricEventLogger {
     private static final Logger logger = LoggerFactory.getLogger(MetricEventLogger.class);
     public static final int DEFAULT_FLUSH_TIME_IN_SECS = 60;
     private final FirehoseClient firehose;

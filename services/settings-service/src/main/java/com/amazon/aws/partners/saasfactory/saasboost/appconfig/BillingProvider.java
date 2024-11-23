@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.Objects;
 
 @JsonDeserialize(builder = BillingProvider.Builder.class)
-public class BillingProvider {
+public final class BillingProvider {
 
     private String apiKey;
 
@@ -52,7 +52,7 @@ public class BillingProvider {
             return false;
         }
         final BillingProvider other = (BillingProvider) obj;
-        return ((apiKey == null && other.apiKey == null) || (apiKey != null && apiKey.equals(other.apiKey)));
+        return (apiKey == null && other.apiKey == null) || (apiKey != null && apiKey.equals(other.apiKey));
     }
 
     @Override

@@ -32,8 +32,8 @@ public class UtilsTest {
 
     @Test
     public void testRandomString() {
-        assertThrows(IllegalArgumentException.class, () -> {Utils.randomString(0);});
-        assertThrows(IllegalArgumentException.class, () -> {Utils.randomString(-1);});
+        assertThrows(IllegalArgumentException.class, () ->Utils.randomString(0));
+        assertThrows(IllegalArgumentException.class, () ->Utils.randomString(-1));
         assertEquals(12, Utils.randomString(12).length());
 
         String illegalCharacters = "!#$%&*+-.:=?^_, ";

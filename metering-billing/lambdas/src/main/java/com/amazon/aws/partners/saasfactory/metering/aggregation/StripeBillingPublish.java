@@ -46,7 +46,7 @@ import static com.amazon.aws.partners.saasfactory.metering.common.Constants.*;
 public class StripeBillingPublish implements RequestStreamHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StripeBillingPublish.class);
-    private final static String TABLE_NAME = System.getenv(TABLE_ENV_VARIABLE);
+    private static final String TABLE_NAME = System.getenv(TABLE_ENV_VARIABLE);
     private static final String API_GATEWAY_HOST = System.getenv("API_GATEWAY_HOST");
     private static final String API_GATEWAY_STAGE = System.getenv("API_GATEWAY_STAGE");
     private static final String API_TRUST_ROLE = System.getenv("API_TRUST_ROLE");

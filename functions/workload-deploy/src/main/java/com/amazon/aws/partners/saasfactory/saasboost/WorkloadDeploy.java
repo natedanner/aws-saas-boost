@@ -180,8 +180,7 @@ public class WorkloadDeploy implements RequestHandler<Map<String, Object>, Objec
                 API_TRUST_ROLE,
                 context.getAwsRequestId()
         );
-        Map<String, Object> appConfig = Utils.fromJson(getAppConfigResponseBody, LinkedHashMap.class);
-        return appConfig;
+        return Utils.fromJson(getAppConfigResponseBody, LinkedHashMap.class);
     }
 
     protected List<Map<String, Object>> getTenants(Context context) {

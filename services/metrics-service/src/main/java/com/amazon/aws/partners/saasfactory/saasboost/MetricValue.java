@@ -21,7 +21,7 @@ import java.util.Objects;
 public class MetricValue implements Comparable<MetricValue> {
 
     private double value;
-    private String id;
+    private final String id;
 
     public MetricValue(double value, String id) {
         this.value = value;
@@ -63,7 +63,7 @@ public class MetricValue implements Comparable<MetricValue> {
             return false;
         }
         final MetricValue other = (MetricValue) obj;
-        return (Utils.nullableEquals(id, other.id) && (value == other.value));
+        return Utils.nullableEquals(id, other.id) && (value == other.value);
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 public abstract class AbstractFilesystemTierConfig {
-    private Boolean encrypt;
+    private final Boolean encrypt;
 
     @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private String encryptionKey;

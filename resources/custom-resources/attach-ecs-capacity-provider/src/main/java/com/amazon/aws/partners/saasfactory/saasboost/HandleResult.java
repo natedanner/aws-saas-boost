@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HandleResult {
-    private boolean success = false;
-    private Map<String, Object> responseData = new HashMap<String, Object>();
+    private boolean success;
+    private Map<String, Object> responseData = new HashMap<>();
 
     public void setSucceeded() {
         this.success = true;

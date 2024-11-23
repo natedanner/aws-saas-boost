@@ -49,13 +49,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ApiGatewayHelper {
+public final class ApiGatewayHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiGatewayHelper.class);
     private static final String AWS_REGION = System.getenv("AWS_REGION");
     private static final String SAAS_BOOST_ENV = System.getenv("SAAS_BOOST_ENV");
     private static final Aws4Signer SIG_V4 = Aws4Signer.create();
-    private static SdkHttpClient HTTP_CLIENT = UrlConnectionHttpClient.create();
+    private static final SdkHttpClient HTTP_CLIENT = UrlConnectionHttpClient.create();
     private static final StsClient sts = StsClient.builder()
             .httpClient(HTTP_CLIENT)
             .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
@@ -94,7 +94,7 @@ public class ApiGatewayHelper {
 
     private static String executeApiRequest(SdkHttpFullRequest apiRequest, SdkHttpFullRequest signedApiRequest) {
         HttpExecuteRequest.Builder requestBuilder = HttpExecuteRequest.builder().request(signedApiRequest != null ? signedApiRequest : apiRequest);
-        apiRequest.contentStreamProvider().ifPresent(c -> requestBuilder.contentStreamProvider(c));
+        apiRequest.contentStreamProvider().ifPresent(requestBuilder::contentStreamProvider);
         HttpExecuteRequest apiExecuteRequest = requestBuilder.build();
         BufferedReader responseReader = null;
         String responseBody;
@@ -162,8 +162,7 @@ public class ApiGatewayHelper {
                 .signingRegion(Region.of(AWS_REGION))
                 .awsCredentials(getTemporaryCredentials(assumedRole, context))
                 .build();
-        SdkHttpFullRequest signedApiRequest = SIG_V4.sign(apiRequest, sigV4Params);
-        return signedApiRequest;
+        return SIG_V4.sign(apiRequest, sigV4Params);
     }
 
     protected static AwsCredentials getTemporaryCredentials(final String assumedRole, final String context) {
@@ -176,7 +175,7 @@ public class ApiGatewayHelper {
             AssumeRoleResponse response = sts.assumeRole(request -> request
                     .roleArn(assumedRole)
                     .durationSeconds(900)
-                    .roleSessionName((Utils.isNotBlank(context)) ? context : SAAS_BOOST_ENV)
+                    .roleSessionName(Utils.isNotBlank(context) ? context : SAAS_BOOST_ENV)
             );
 
             //AssumedRoleUser assumedUser = response.assumedRoleUser();

@@ -24,7 +24,7 @@ import java.util.Map;
 public class MetricResultItem {
 
     private MetricDimension dimension;
-    private Map<String, List<Double>> stats = new LinkedHashMap<>();
+    private final Map<String, List<Double>> stats = new LinkedHashMap<>();
     private List<MetricValue> topTenants = new ArrayList<>();
 
     public MetricDimension getDimension() {

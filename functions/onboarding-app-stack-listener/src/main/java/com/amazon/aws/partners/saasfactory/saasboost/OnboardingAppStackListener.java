@@ -215,9 +215,9 @@ public class OnboardingAppStackListener implements RequestHandler<SNSEvent, Obje
     }
 
     protected static boolean filter(CloudFormationEvent cloudFormationEvent) {
-        return ("AWS::CloudFormation::Stack".equals(cloudFormationEvent.getResourceType())
+        return "AWS::CloudFormation::Stack".equals(cloudFormationEvent.getResourceType())
                 && STACK_NAME_PATTERN.matcher(cloudFormationEvent.getStackName()).matches()
-                && EVENTS_OF_INTEREST.contains(cloudFormationEvent.getResourceStatus()));
+                && EVENTS_OF_INTEREST.contains(cloudFormationEvent.getResourceStatus());
     }
 
 }

@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonDeserialize(builder = EfsFilesystem.Builder.class)
-public class EfsFilesystem extends AbstractFilesystem {
+public final class EfsFilesystem extends AbstractFilesystem {
 
     private Map<String, EfsFilesystemTierConfig> tiers;
 
@@ -51,10 +51,7 @@ public class EfsFilesystem extends AbstractFilesystem {
             return true;
         }
         // Same type?
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        return true;
+        return !(getClass() != obj.getClass());
     }
 
     @Override

@@ -66,7 +66,7 @@ public class KeycloakSetup implements RequestHandler<Map<String, Object>, Object
         final String realm = (String) resourceProperties.get("Realm");
         final String adminUserSecretId = (String) resourceProperties.get("AdminUserCredentials");
         String adminWebAppUrl = (String) resourceProperties.get("AdminWebAppUrl");
-        final String redirectUriPattern = (!adminWebAppUrl.endsWith("/*")) ? adminWebAppUrl + "/*" : adminWebAppUrl;
+        final String redirectUriPattern = !adminWebAppUrl.endsWith("/*") ? adminWebAppUrl + "/*" : adminWebAppUrl;
         ExecutorService service = Executors.newSingleThreadExecutor();
         Map<String, Object> responseData = new HashMap<>();
         try {

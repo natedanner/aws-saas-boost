@@ -120,9 +120,7 @@ public class OnboardingStackListener implements RequestHandler<SNSEvent, Object>
                             if ("DNSName".equals(output.outputKey())) {
                                 hostname = output.outputValue();
                             }
-                            if ("ADPasswordSecret".equals(output.outputKey())) {
-                                
-                            }
+                            "ADPasswordSecret".equals(output.outputKey());
                         }
                     }
                 }
@@ -326,10 +324,10 @@ public class OnboardingStackListener implements RequestHandler<SNSEvent, Object>
     }
 
     protected static boolean filter(CloudFormationEvent cloudFormationEvent) {
-        return ("AWS::CloudFormation::Stack".equals(cloudFormationEvent.getResourceType())
+        return "AWS::CloudFormation::Stack".equals(cloudFormationEvent.getResourceType())
                 && STACK_NAME_PATTERN.matcher(cloudFormationEvent.getStackName()).matches()
                 && STACK_NAME_PATTERN.matcher(cloudFormationEvent.getLogicalResourceId()).matches()
-                && EVENTS_OF_INTEREST.contains(cloudFormationEvent.getResourceStatus()));
+                && EVENTS_OF_INTEREST.contains(cloudFormationEvent.getResourceStatus());
     }
 
 }

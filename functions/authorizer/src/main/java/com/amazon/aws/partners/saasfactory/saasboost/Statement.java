@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 @JsonDeserialize(builder = Statement.Builder.class)
-public class Statement {
+public final class Statement {
 
     @JsonIgnore
     private static final String ACTION = "execute-api:Invoke";

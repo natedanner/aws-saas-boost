@@ -89,10 +89,10 @@ public class SettingsServiceDALTest {
         String parameterValue = "sb-" + env + "-artifacts-test";
 
         assertTrue("null parameter returns null setting", SettingsServiceDAL.fromParameterStore(null) == null);
-        assertThrows("null parameter name throws RuntimeException", RuntimeException.class, () -> {SettingsServiceDAL.fromParameterStore(Parameter.builder().build());});
-        assertThrows("Empty parameter name throws RuntimeException", RuntimeException.class, () -> {SettingsServiceDAL.fromParameterStore(Parameter.builder().name("").build());});
-        assertThrows("Blank parameter name is invalid pattern throws RuntimeException", RuntimeException.class, () -> {SettingsServiceDAL.fromParameterStore(Parameter.builder().name(" ").build());});
-        assertThrows("Invalid pattern parameter name throws RuntimeException", RuntimeException.class, () -> {SettingsServiceDAL.fromParameterStore(Parameter.builder().name("foobar").build());});
+        assertThrows("null parameter name throws RuntimeException", RuntimeException.class, () ->SettingsServiceDAL.fromParameterStore(Parameter.builder().build()));
+        assertThrows("Empty parameter name throws RuntimeException", RuntimeException.class, () ->SettingsServiceDAL.fromParameterStore(Parameter.builder().name("").build()));
+        assertThrows("Blank parameter name is invalid pattern throws RuntimeException", RuntimeException.class, () ->SettingsServiceDAL.fromParameterStore(Parameter.builder().name(" ").build()));
+        assertThrows("Invalid pattern parameter name throws RuntimeException", RuntimeException.class, () ->SettingsServiceDAL.fromParameterStore(Parameter.builder().name("foobar").build()));
 
         Parameter validParam = Parameter.builder()
                 .name(parameterName)
@@ -166,10 +166,10 @@ public class SettingsServiceDALTest {
         String parameterName = "/" + SettingsServiceDAL.SAAS_BOOST_PREFIX + "/" + env + "/" + settingName;
         String parameterValue = "sb-" + env + "-artifacts-test";
 
-        assertThrows("null setting throws RuntimeException", RuntimeException.class, () -> {SettingsServiceDAL.toParameterStore(null);});
-        assertThrows("null setting name throws RuntimeException", RuntimeException.class, () -> {SettingsServiceDAL.toParameterStore(Setting.builder().build());});
-        assertThrows("Empty setting name throws RuntimeException", RuntimeException.class, () -> {SettingsServiceDAL.toParameterStore(Setting.builder().name("").build());});
-        assertThrows("Blank setting name throws RuntimeException", RuntimeException.class, () -> {SettingsServiceDAL.toParameterStore(Setting.builder().name(" ").build());});
+        assertThrows("null setting throws RuntimeException", RuntimeException.class, () ->SettingsServiceDAL.toParameterStore(null));
+        assertThrows("null setting name throws RuntimeException", RuntimeException.class, () ->SettingsServiceDAL.toParameterStore(Setting.builder().build()));
+        assertThrows("Empty setting name throws RuntimeException", RuntimeException.class, () ->SettingsServiceDAL.toParameterStore(Setting.builder().name("").build()));
+        assertThrows("Blank setting name throws RuntimeException", RuntimeException.class, () ->SettingsServiceDAL.toParameterStore(Setting.builder().name(" ").build()));
 
         Parameter expectedEmptyParameter = Parameter.builder()
                 .name(parameterName)

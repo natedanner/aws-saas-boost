@@ -67,9 +67,8 @@ public class TenantServiceTest {
         Map<String, Tenant.Resource> actual = TenantService.fromTenantResourcesChangedEvent(event);
 
         assertEquals("Size unequal", expected.size(), actual.size());
-        expected.keySet().stream().forEach((key) -> {
-            assertEquals("Value mismatch for '" + key + "'", expected.get(key), actual.get(key));
-        });
+        expected.keySet().stream().forEach(key ->
+            assertEquals("Value mismatch for '" + key + "'", expected.get(key), actual.get(key)));
     }
 
 }

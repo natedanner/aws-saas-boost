@@ -27,12 +27,12 @@ public class MetricQuery {
     private Instant startDate;
     private Instant endDate;
     private String timeRangeName;
-    private int tzOffset = 0;
+    private int tzOffset;
     private List<String> tenants = new ArrayList<>();
-    private boolean singleTenant = false;
-    private boolean topTenants = false;
-    private boolean statsMap = false;
-    private boolean tenantTaskMaxCapacity = false;
+    private boolean singleTenant;
+    private boolean topTenants;
+    private boolean statsMap;
+    private boolean tenantTaskMaxCapacity;
 
     @Override
     public String toString() {

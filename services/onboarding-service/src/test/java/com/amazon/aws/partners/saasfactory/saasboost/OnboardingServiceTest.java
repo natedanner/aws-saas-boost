@@ -112,8 +112,7 @@ public class OnboardingServiceTest {
         Map<String, Integer> actual = OnboardingService.getPathPriority(appConfig);
 
         assertEquals("Size unequal", expected.size(), actual.size());
-        expected.keySet().stream().forEach(key -> {
-            assertEquals("Value mismatch for '" + key + "'", expected.get(key), actual.get(key));
-        });
+        expected.keySet().stream().forEach(key ->
+            assertEquals("Value mismatch for '" + key + "'", expected.get(key), actual.get(key)));
     }
 }

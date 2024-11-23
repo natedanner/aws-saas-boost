@@ -54,7 +54,7 @@ public final class FsxOntapFilesystemTierConfig extends AbstractFsxFilesystemTie
             return false;
         }
         final FsxOntapFilesystemTierConfig other = (FsxOntapFilesystemTierConfig) obj;
-        return (Utils.nullableEquals(this.volumeSize, other.volumeSize));
+        return Utils.nullableEquals(this.volumeSize, other.volumeSize);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.amazon.aws.partners.saasfactory.saasboost;
 
-public class OnboardingStack {
+public final class OnboardingStack {
 
     private String service;
     private String name;

@@ -18,5 +18,5 @@ package com.amazon.aws.partners.saasfactory.saasboost.appconfig;
 
 public enum EcsLaunchType {
     EC2,
-    FARGATE;
+    FARGATE
 }

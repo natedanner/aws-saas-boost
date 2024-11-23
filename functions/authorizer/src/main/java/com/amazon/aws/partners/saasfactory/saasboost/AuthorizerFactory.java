@@ -16,7 +16,7 @@
 
 package com.amazon.aws.partners.saasfactory.saasboost;
 
-public class AuthorizerFactory {
+public final class AuthorizerFactory {
 
     private AuthorizerFactory() {
     }

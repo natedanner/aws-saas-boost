@@ -122,7 +122,7 @@ public class DynamoTierAttributeTest {
 
     @Test
     public void id_toTier_valid() {
-        assertEquals(VALID_ID.toString(), toTierTest(
+        assertEquals(VALID_ID, toTierTest(
                 DynamoTierAttribute.id, VALID_ATTRIBUTES.get(DynamoTierAttribute.id.name()))
             .getId());
     }

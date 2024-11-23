@@ -29,24 +29,18 @@ public class OnboardingAppStackListenerTest {
         String serviceName = "foo bar";
         String resourceType = "CODE_PIPELINE";
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            OnboardingAppStackListener.serviceNameResourceKey(null, resourceType);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            OnboardingAppStackListener.serviceNameResourceKey("", resourceType);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            OnboardingAppStackListener.serviceNameResourceKey(" ", resourceType);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            OnboardingAppStackListener.serviceNameResourceKey(serviceName, null);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            OnboardingAppStackListener.serviceNameResourceKey(serviceName, "");
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            OnboardingAppStackListener.serviceNameResourceKey(serviceName, "  ");
-        });
+        assertThrows(IllegalArgumentException.class, () ->
+            OnboardingAppStackListener.serviceNameResourceKey(null, resourceType));
+        assertThrows(IllegalArgumentException.class, () ->
+            OnboardingAppStackListener.serviceNameResourceKey("", resourceType));
+        assertThrows(IllegalArgumentException.class, () ->
+            OnboardingAppStackListener.serviceNameResourceKey(" ", resourceType));
+        assertThrows(IllegalArgumentException.class, () ->
+            OnboardingAppStackListener.serviceNameResourceKey(serviceName, null));
+        assertThrows(IllegalArgumentException.class, () ->
+            OnboardingAppStackListener.serviceNameResourceKey(serviceName, ""));
+        assertThrows(IllegalArgumentException.class, () ->
+            OnboardingAppStackListener.serviceNameResourceKey(serviceName, "  "));
 
         String expected = "SERVICE_FOO_BAR_CODE_PIPELINE";
         assertEquals(expected, OnboardingAppStackListener.serviceNameResourceKey(serviceName, resourceType));

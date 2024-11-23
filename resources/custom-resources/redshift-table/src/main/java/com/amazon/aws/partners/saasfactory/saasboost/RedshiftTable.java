@@ -37,8 +37,8 @@ import java.util.concurrent.*;
 
 public class RedshiftTable implements RequestHandler<Map<String, Object>, Object> {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(RedshiftTable.class);
-    private SsmClient ssm;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedshiftTable.class);
+    private final SsmClient ssm;
     public RedshiftTable()  {
             LOGGER.info("Version Info: {}", Utils.version(this.getClass()));
             this.ssm = Utils.sdkClient(SsmClient.builder(), SsmClient.SERVICE_NAME);

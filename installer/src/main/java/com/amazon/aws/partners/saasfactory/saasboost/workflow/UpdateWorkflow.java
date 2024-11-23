@@ -147,7 +147,7 @@ public class UpdateWorkflow extends AbstractWorkflow {
                                 clientBuilderFactory.s3Builder().build(), // s3 client
                                 Path.of(action.getDirectoryName(), target), // local path
                                 Path.of(target)); // remote path
-                        if (target.equals("saas-boost-metrics-analytics.yaml")
+                        if ("saas-boost-metrics-analytics.yaml".equals(target)
                                 && environment.isMetricsAnalyticsDeployed()) {
                             // the metrics-analytics stack is not a child stack of the base stack,
                             // so just updating the base stack won't update. update it manually.
@@ -462,7 +462,7 @@ public class UpdateWorkflow extends AbstractWorkflow {
                             // do nothing
                         }
                     }
-                    if (pathAction.getTargets().size() > 0 && !actions.contains(pathAction)) {
+                    if (!pathAction.getTargets().isEmpty() && !actions.contains(pathAction)) {
                         LOGGER.debug("Adding new action {} from path {}", pathAction, changedPath);
                         actions.add(pathAction);
                     }

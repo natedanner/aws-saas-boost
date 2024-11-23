@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class LimitTest {
 
-    public static void main(String args[]) throws URISyntaxException {
+    public static void main(String[] args) throws URISyntaxException {
 /*
         LimitServiceDAL dal = new LimitServiceDAL();
         dal.handleRequest();

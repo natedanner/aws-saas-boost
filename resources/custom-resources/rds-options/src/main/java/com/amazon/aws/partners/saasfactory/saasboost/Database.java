@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = Database.Builder.class)
-public class Database {
+public final class Database {
 
     enum RdsEngine {
         AURORA_PG("aurora-postgresql", "Amazon Aurora PostgreSQL", 5432),

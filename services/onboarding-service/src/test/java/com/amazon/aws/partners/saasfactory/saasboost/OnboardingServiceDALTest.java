@@ -81,16 +81,14 @@ public class OnboardingServiceDALTest {
 
         // DynamoDB marshalling
         assertEquals("Size unequal", expected.size(), actual.size());
-        expected.keySet().stream().forEach(key -> {
-            assertEquals("Value mismatch for '" + key + "'", expected.get(key), actual.get(key));
-        });
+        expected.keySet().stream().forEach(key ->
+            assertEquals("Value mismatch for '" + key + "'", expected.get(key), actual.get(key)));
 
         // Have we reflected all class properties we serialize for API calls in DynamoDB?
         Map<String, Object> json = Utils.fromJson(Utils.toJson(onboarding), LinkedHashMap.class);
         json.keySet().stream()
-                .map(key -> Utils.toSnakeCase(key))
-                .forEach(key -> {
-                    assertTrue("Class property '" + key + "' does not exist in DynamoDB attribute map", actual.containsKey(key));
-                });
+                .map(Utils::toSnakeCase)
+                .forEach(key ->
+                    assertTrue("Class property '" + key + "' does not exist in DynamoDB attribute map", actual.containsKey(key)));
     }
 }

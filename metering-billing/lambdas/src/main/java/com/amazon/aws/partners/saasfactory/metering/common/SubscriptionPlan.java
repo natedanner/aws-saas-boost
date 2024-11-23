@@ -23,8 +23,8 @@ public enum SubscriptionPlan {
     product_premium("Premium", 20000, MeteredProduct.values());
 
     private final long amount;
-    private String label;
-    private MeteredProduct[] meteredProducts;
+    private final String label;
+    private final MeteredProduct[] meteredProducts;
 
     SubscriptionPlan(String label, long amount, MeteredProduct[] values) {
         this.amount = amount;

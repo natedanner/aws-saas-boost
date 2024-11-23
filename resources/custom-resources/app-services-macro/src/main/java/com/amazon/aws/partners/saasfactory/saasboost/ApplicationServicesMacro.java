@@ -81,7 +81,7 @@ public class ApplicationServicesMacro implements RequestHandler<Map<String, Obje
     protected static String updateTemplateForPooledExtensions(
             final Map<String, Object> templateParameters,
             Map<String, Object> template) {
-        Set<String> processedExtensions = new HashSet<String>();
+        Set<String> processedExtensions = new HashSet<>();
         if (templateParameters.containsKey("AppExtensions") && template.containsKey("Resources")) {
             String applicationExtensions = (String) templateParameters.get("AppExtensions");
             if (Utils.isNotEmpty(applicationExtensions)) {

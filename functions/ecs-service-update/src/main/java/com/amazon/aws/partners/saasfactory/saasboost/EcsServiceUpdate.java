@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class EcsServiceUpdate implements RequestHandler<Map<String, Object>, Object> {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(EcsServiceUpdate.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EcsServiceUpdate.class);
     private final EcsClient ecs;
     private final CodePipelineClient codepipeline;
 

@@ -53,7 +53,7 @@ import java.nio.file.Path;
  * @see <a href=https://github.com/awslabs/aws-saas-boost/issues/137>SaaS Boost Issue #137</a>
  * @see <a href=https://github.com/aws/aws-sdk-java-v2/issues/1754>AWS Java SDK v2 Issue #1754</a>
  */
-public class RefreshingProfileDefaultCredentialsProvider implements AwsCredentialsProvider {
+public final class RefreshingProfileDefaultCredentialsProvider implements AwsCredentialsProvider {
     private final String profileFilename;
     private final DefaultCredentialsProvider.Builder curriedBuilder;
 
@@ -87,7 +87,7 @@ public class RefreshingProfileDefaultCredentialsProvider implements AwsCredentia
     /**
      * @see DefaultCredentialsProvider.Builder
      */
-    public static class Builder {
+    public static final class Builder {
         private String profileFilename;
         private String profileName;
         private boolean reuseLastProviderEnabled;

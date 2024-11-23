@@ -39,7 +39,7 @@ import static com.amazon.aws.partners.saasfactory.metering.common.Constants.SUBS
 import static com.amazon.aws.partners.saasfactory.metering.common.Constants.formatTenantEntry;
 import static com.amazon.aws.partners.saasfactory.metering.common.Constants.getEnvVariable;
 
-public class TenantConfiguration {
+public final class TenantConfiguration {
 
     private final String tenantID;
     private final Map<String, String> SubscriptionMapping;
@@ -67,7 +67,7 @@ public class TenantConfiguration {
         List<TenantConfiguration> tenantIDs = new ArrayList<>();
         String configIndexName = getEnvVariable(CONFIG_INDEX_NAME_ENV_VARIABLE, logger);
 
-        if (configIndexName.equals("")) {
+        if ("".equals(configIndexName)) {
             return tenantIDs;
         }
 

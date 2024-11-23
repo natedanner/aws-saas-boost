@@ -49,8 +49,8 @@ import static com.amazon.aws.partners.saasfactory.metering.common.Constants.*;
 public class BillingEventAggregation implements RequestStreamHandler {
 
     private final DynamoDbClient ddb;
-    private final Logger LOGGER = LoggerFactory.getLogger(BillingEventAggregation.class);
-    private final static String TABLE_NAME = System.getenv(TABLE_ENV_VARIABLE);
+    private final Logger logger = LoggerFactory.getLogger(BillingEventAggregation.class);
+    private static final String TABLE_NAME = System.getenv(TABLE_ENV_VARIABLE);
 
     public BillingEventAggregation() {
         long startTimeMillis = System.currentTimeMillis();
@@ -61,9 +61,9 @@ public class BillingEventAggregation implements RequestStreamHandler {
         if (Utils.isBlank(System.getenv("DYNAMODB_CONFIG_INDEX_NAME"))) {
             throw new IllegalStateException("Missing required environment variable DYNAMODB_CONFIG_INDEX_NAME");
         }
-        LOGGER.info("Version Info: " + Utils.version(this.getClass()));
+        logger.info("Version Info: " + Utils.version(this.getClass()));
         ddb = Utils.sdkClient(DynamoDbClient.builder(), DynamoDbClient.SERVICE_NAME);
-        LOGGER.info("Constructor init: {}", System.currentTimeMillis() - startTimeMillis);
+        logger.info("Constructor init: {}", System.currentTimeMillis() - startTimeMillis);
     }
 
     private List<BillingEvent> getBillingEventsForTenant(String tenantID) {
@@ -106,9 +106,9 @@ public class BillingEventAggregation implements RequestStreamHandler {
             try {
                 result = this.ddb.query(request);
             } catch (ResourceNotFoundException e) {
-                this.LOGGER.error("Table {} does not exist", TABLE_NAME);
+                this.logger.error("Table {} does not exist", TABLE_NAME);
             } catch (InternalServerErrorException e) {
-                this.LOGGER.error(e.getMessage());
+                this.logger.error(e.getMessage());
                 // if there's a failure, return an empty array list rather than a partial array list
                 return new ArrayList<>();
             }
@@ -127,16 +127,16 @@ public class BillingEventAggregation implements RequestStreamHandler {
     }
 
     private Map<ZonedDateTime, List<BillingEvent>> categorizeEvents(TenantConfiguration tenant, List<BillingEvent> billingEvents) {
-        if (billingEvents.size() == 0) {
+        if (billingEvents.isEmpty()) {
             return null;
         }
         // Figure out the lowest and highest date (the range)
         Instant earliestBillingEvent = Collections.min(billingEvents).getEventTime();
-        this.LOGGER.info("Earliest event for tenant {} at {}",
+        this.logger.info("Earliest event for tenant {} at {}",
                                     tenant.getTenantID(),
                                     earliestBillingEvent.toString());
         Instant latestBillingEvent = Collections.max(billingEvents).getEventTime();
-        this.LOGGER.info("Latest event for tenant {} at {}",
+        this.logger.info("Latest event for tenant {} at {}",
                                     tenant.getTenantID(),
                                     latestBillingEvent.toString());
         // Create a map with each element as a key based on the frequency (e.g. a day for a key with frequency for a day)
@@ -146,7 +146,7 @@ public class BillingEventAggregation implements RequestStreamHandler {
             ZonedDateTime startOfEventTimePeriod = eventTime.truncatedTo(TRUNCATION_UNIT);
             ZonedDateTime startOfCurrentTimePeriod = Instant.now().atZone(ZoneId.of("UTC")).truncatedTo(TRUNCATION_UNIT);
             // Skip over this time period and future time period events because there may eventually be more events
-            if (!(startOfCurrentTimePeriod.compareTo(startOfEventTimePeriod) <= 0)) {
+            if (startOfCurrentTimePeriod.compareTo(startOfEventTimePeriod) > 0) {
                 List<BillingEvent> eventList = eventCounts.getOrDefault(startOfEventTimePeriod, new ArrayList<>());
                 eventList.add(event);
                 eventCounts.put(startOfEventTimePeriod, eventList);
@@ -190,10 +190,10 @@ public class BillingEventAggregation implements RequestStreamHandler {
         try {
             ddb.putItem(putItemRequest);
         } catch (ResourceNotFoundException|InternalServerErrorException e) {
-            this.LOGGER.error("{}", e.toString());
+            this.logger.error("{}", e.toString());
         } catch (ConditionalCheckFailedException e) {
             // Repeat the transaction and see if it works
-            this.LOGGER.error("Entry for {} at {} already exists",
+            this.logger.error("Entry for {} at {} already exists",
                     productCode,
                     time.toInstant().toString());
         }
@@ -209,7 +209,7 @@ public class BillingEventAggregation implements RequestStreamHandler {
             .delete(deleteRequest)
             .build()).collect(Collectors.toList());
         transaction.addAll(deleteRequestItems);
-        this.LOGGER.info("Transaction contains {} actions", transaction.size());
+        this.logger.info("Transaction contains {} actions", transaction.size());
 
         TransactWriteItemsRequest transactWriteItemsRequest = TransactWriteItemsRequest.builder()
                 .transactItems(transaction)
@@ -218,13 +218,13 @@ public class BillingEventAggregation implements RequestStreamHandler {
         try {
             ddb.transactWriteItems(transactWriteItemsRequest);
         } catch (ResourceNotFoundException|InternalServerErrorException|TransactionCanceledException e) {
-            this.LOGGER.error("{}", e.toString());
+            this.logger.error("{}", e.toString());
         }
     }
 
     private Map<String, Long> countEventsByProductCode(List<BillingEvent> billingEvents) {
         Map<String, Long> countByProductCode = new HashMap<>();
-        this.LOGGER.info("Counting events by product code");
+        this.logger.info("Counting events by product code");
         for (BillingEvent event : billingEvents) {
             Long currentCount = countByProductCode.getOrDefault(event.getProductCode(), Long.valueOf(0));
             Long updatedCount = event.getQuantity() + currentCount;
@@ -242,7 +242,7 @@ public class BillingEventAggregation implements RequestStreamHandler {
         Map<String, AttributeValue> expressionAttributeValues = new HashMap<>();
         Integer index = 0;
         for (String productCode : countByProductCode.keySet()) {
-            this.LOGGER.info("Count for {} is {}", productCode, countByProductCode.get(productCode));
+            this.logger.info("Count for {} is {}", productCode, countByProductCode.get(productCode));
             // Appended to the ADD_TO_AGGREGATION_ATTRIBUTE_VALUE for identification in the expression
             // attribute names/values. There could be more than one product code to aggregate
             String aggregationAttributeName = ADD_TO_AGGREGATION_EXPRESSION_NAME + index.toString();
@@ -310,10 +310,10 @@ public class BillingEventAggregation implements RequestStreamHandler {
         List<Delete> deleteRequests = null;
 
         countByProductCode = countEventsByProductCode(billingEvents);
-        this.LOGGER.info("Counting the quantity of entries for each product code");
+        this.logger.info("Counting the quantity of entries for each product code");
         // Initialize the item for this time slot if necessary
         for (String productCode : countByProductCode.keySet()) {
-            this.LOGGER.debug("Initializing count for product code {} for tenant {} at time {}",
+            this.logger.debug("Initializing count for product code {} for tenant {} at time {}",
                     productCode,
                     tenant.getTenantID(),
                     time.toInstant().toString());
@@ -321,7 +321,7 @@ public class BillingEventAggregation implements RequestStreamHandler {
             // Pass in a copy of compositeKey because initializeItem makes modifications to it
             initializeItem(new HashMap<>(compositeKey), productCode, time);
         }
-        this.LOGGER.debug("Batched {} events, performing transaction", billingEvents.size());
+        this.logger.debug("Batched {} events, performing transaction", billingEvents.size());
         updateRequest = buildUpdate(countByProductCode, compositeKey);
         deleteRequests = buildDeletes(billingEvents, tenant);
         putRequestsAsTransaction(updateRequest, deleteRequests);
@@ -356,7 +356,7 @@ public class BillingEventAggregation implements RequestStreamHandler {
             // Submit the last batch of items
             // If the number of requests lands on an increment of 25, need to make sure that no attempt is made to put
             // an empty list, which is why I'm checking for a size greater than zero
-            if (eventsToCount.size() > 0) {
+            if (!eventsToCount.isEmpty()) {
                 performTransaction(eventsToCount, compositeKey, time, tenant);
                 eventsToCount.clear();
             }
@@ -365,24 +365,24 @@ public class BillingEventAggregation implements RequestStreamHandler {
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) {
-        this.LOGGER.info("Resolving tenant IDs in table {}", TABLE_NAME);
-        List<TenantConfiguration> tenants = TenantConfiguration.getTenantConfigurations(TABLE_NAME, this.ddb, this.LOGGER);
-        this.LOGGER.info("Resolved tenant IDs in table {}", TABLE_NAME);
+        this.logger.info("Resolving tenant IDs in table {}", TABLE_NAME);
+        List<TenantConfiguration> tenants = TenantConfiguration.getTenantConfigurations(TABLE_NAME, this.ddb, this.logger);
+        this.logger.info("Resolved tenant IDs in table {}", TABLE_NAME);
         if (tenants == null) {
-            this.LOGGER.info("No tenants found");
+            this.logger.info("No tenants found");
             return;
         }
         for (TenantConfiguration tenant : tenants) {
             List<BillingEvent> billingEvents = getBillingEventsForTenant(tenant.getTenantID());
             if (billingEvents.isEmpty()) {
-                this.LOGGER.info("No events for {}", tenant.getTenantID());
+                this.logger.info("No events for {}", tenant.getTenantID());
                 continue;
             }
             // Count the number of events - this step is necessary to make the transactions work; they need
             // to be grouped together
             Map<ZonedDateTime, List<BillingEvent>> categorizedEvents = categorizeEvents(tenant, billingEvents);
             if (categorizedEvents == null) {
-                this.LOGGER.info("No aggregation entries for {}", tenant.getTenantID());
+                this.logger.info("No aggregation entries for {}", tenant.getTenantID());
             } else {
                 // Put those results back into the table
                 aggregateEntries(categorizedEvents, tenant);

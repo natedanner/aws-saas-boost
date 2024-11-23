@@ -23,11 +23,11 @@ public class Metric {
 
     private String stat;
     private String nameSpace;
-    private SortedMap<Instant, PriorityQueue<MetricValue>> timeValMap = new TreeMap<>();
+    private final SortedMap<Instant, PriorityQueue<MetricValue>> timeValMap = new TreeMap<>();
     private String metricName;
     private double period;
-    private List<Double> metricValues = new ArrayList<>();
-    private List<Instant> metricTimes = new ArrayList<>();
+    private final List<Double> metricValues = new ArrayList<>();
+    private final List<Instant> metricTimes = new ArrayList<>();
 
     public void addMetricValue(Double val) {
         this.metricValues.add(val);

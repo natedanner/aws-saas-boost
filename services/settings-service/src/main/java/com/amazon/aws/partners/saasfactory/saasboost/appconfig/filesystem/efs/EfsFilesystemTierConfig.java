@@ -57,7 +57,7 @@ public final class EfsFilesystemTierConfig extends AbstractFilesystemTierConfig 
             return false;
         }
         final EfsFilesystemTierConfig other = (EfsFilesystemTierConfig) obj;
-        return (Utils.nullableEquals(this.lifecycle, other.lifecycle));
+        return Utils.nullableEquals(this.lifecycle, other.lifecycle);
     }
 
     @Override

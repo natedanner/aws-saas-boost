@@ -16,7 +16,7 @@
 package com.amazonaws.saas.metrics;
 
 public class TenantBuilder {
-    private Tenant tenant = new Tenant();
+    private final Tenant tenant = new Tenant();
 
     public TenantBuilder() {
     }

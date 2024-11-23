@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 @JsonDeserialize(builder = PolicyDocument.Builder.class)
-public class PolicyDocument {
+public final class PolicyDocument {
 
     @JsonIgnore
     private static final String VERSION = "2012-10-17";

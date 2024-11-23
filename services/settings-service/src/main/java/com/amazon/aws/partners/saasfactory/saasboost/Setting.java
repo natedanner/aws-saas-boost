@@ -23,7 +23,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 @JsonDeserialize(builder = Setting.Builder.class)
-public class Setting {
+public final class Setting {
 
     private static final Pattern PARAMETER_STORE_REGEX = Pattern.compile("[a-zA-Z0-9_/\\.-]+");
     private final String name;
@@ -97,13 +97,13 @@ public class Setting {
             return false;
         }
         final Setting other = (Setting) obj;
-        return (((name == null && other.name == null) || (name != null && name.equals(other.name))) // Parameter Store is case sensitive
+        return ((name == null && other.name == null) || (name != null && name.equals(other.name))) // Parameter Store is case sensitive
                 && ((value == null && other.value == null) || (value != null && value.equals(other.value)))
                 && ((description == null && other.description == null)
                         || (description != null && description.equalsIgnoreCase(other.description)))
                 && ((version == null && other.version == null) || (version != null && version.equals(other.version)))
                 && (readOnly == other.readOnly)
-                && (secure == other.secure));
+                && (secure == other.secure);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class Setting {
         private String name;
         private String value;
         private boolean readOnly = true;
-        private boolean secure = false;
+        private boolean secure;
         private Long version;
         private String description;
 

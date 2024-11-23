@@ -58,8 +58,9 @@ public class MetricEventLoggerIntegrationTest {
     public void logBatchEventShouldSendToKinesisWhenBufferIsFull() {
         int buffer = 5;
         MetricEventLogger logger = MetricEventLogger.getBatchLoggerFor("Metrics", Region.US_EAST_1, buffer, 60);
-        for (int i = 0 ; i <= (buffer + 1) ; i++)
+        for (int i = 0; i <= (buffer + 1); i++) {
             logger.log(event);
+        }
     }
 
     @Ignore

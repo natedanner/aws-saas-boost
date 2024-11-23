@@ -90,7 +90,7 @@ public final class GitVersionInfo {
     }
 
     @JsonPOJOBuilder(withPrefix = "") // setters aren't named with[Property]
-    public static class Builder {
+    public static final class Builder {
         private String tag;
         private String commit;
         private String describe;

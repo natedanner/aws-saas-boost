@@ -140,7 +140,7 @@ public final class KeycloakApiTest {
                 .when(mockClient).send(requestCaptor.capture(), any(BodyHandler.class));
         // createUser calls getUser, so mock getUser to return expected
         doReturn(mockResponse(HttpURLConnection.HTTP_OK, Utils.toJson(List.of(expected))))
-                .when(mockClient).send(argThat((request) -> "GET".equals(request.method())), any(BodyHandler.class));
+                .when(mockClient).send(argThat(request -> "GET".equals(request.method())), any(BodyHandler.class));
         UserRepresentation actual = api.createUser(TEST_EVENT, expected);
         assertRequest(requestCaptor.getValue(), "POST", endpoint("/users"), Utils.toJson(expected));
         assertUsersEqual(expected, actual);
@@ -177,7 +177,7 @@ public final class KeycloakApiTest {
                 .when(mockClient).send(requestCaptor.capture(), any(BodyHandler.class));
         // createUser calls getUser, so mock getUser to return expected
         doReturn(mockResponse(HttpURLConnection.HTTP_OK, Utils.toJson(List.of(expected))))
-                .when(mockClient).send(argThat((request) -> "GET".equals(request.method())), any(BodyHandler.class));
+                .when(mockClient).send(argThat(request -> "GET".equals(request.method())), any(BodyHandler.class));
         UserRepresentation actual = api.deleteUser(TEST_EVENT, expected.getUsername());
         assertRequest(requestCaptor.getValue(), "DELETE", endpoint("/users/" + expected.getId()), null);
         assertUsersEqual(expected, actual);

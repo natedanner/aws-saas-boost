@@ -19,7 +19,7 @@ public enum MeteredProduct {
     product_requests("Requests",10);
 
     private final long amount;
-    private String label;
+    private final String label;
 
     MeteredProduct(String label, long amount) {
         this.amount = amount;

@@ -35,7 +35,7 @@ public class TestAutoScale {
 
 
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         String nextToken = null;
         final ServiceNamespace ns = ServiceNamespace.ECS;

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.regex.Pattern;
 
 @JsonDeserialize(builder = TokenAuthorizerRequest.Builder.class)
-public class TokenAuthorizerRequest {
+public final class TokenAuthorizerRequest {
 
     private static final Pattern BEARER_TOKEN_REGEX = Pattern.compile("^[B|b]earer +");
     private final String type;

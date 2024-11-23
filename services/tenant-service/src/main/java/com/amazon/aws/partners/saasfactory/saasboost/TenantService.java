@@ -378,7 +378,7 @@ public class TenantService implements RequestHandler<Map<String, Object>, APIGat
         if (resources != null) {
             return resources.entrySet().stream()
                     .collect(Collectors.toMap(
-                            entry -> entry.getKey(),
+                            Map.Entry::getKey,
                             entry -> {
                                 Map<String, String> res = (Map<String, String>) entry.getValue();
                                 return new Tenant.Resource(res.get("name"), res.get("arn"),

@@ -51,7 +51,7 @@ public class MetricHelper {
     // Method is used to build the P90, P70, and P50 for graphing where
     // P90 means 90% of the values were below this value.
     public static Map<String, Double> getPercentiles(final List<MetricValue> metricValueList) {
-        final Map<String, Double> retMap = new HashMap<String, Double>();
+        final Map<String, Double> retMap = new HashMap<>();
         final int count = metricValueList.size();
         if (count > 0) {
             retMap.put("p90", getPxx(metricValueList, .95));
@@ -59,7 +59,7 @@ public class MetricHelper {
             retMap.put("p50", getPxx(metricValueList, .50));
             BigDecimal sum = new BigDecimal(BigInteger.ZERO);
             for (MetricValue mv : metricValueList) {
-                sum = sum.add(new BigDecimal(mv.getValue()));
+                sum = sum.add(BigDecimal.valueOf(mv.getValue()));
             }
             BigDecimal average = sum.divide(new BigDecimal(count), 3, RoundingMode.HALF_UP);
             retMap.put("Average", average.doubleValue());
@@ -76,9 +76,8 @@ public class MetricHelper {
 
     public static Double getPxx(final List<MetricValue> metricValueList, double index) {
         int pIndex = (int) Math.round(index * metricValueList.size());
-        double pX = metricValueList.get(pIndex - 1).getValue();
         //LOGGER.debug("getPXX: PX calculated for Percentile: " + index + " is " + pX + " at index: " + pIndex);
-        return pX;
+        return metricValueList.get(pIndex - 1).getValue();
     }
 
     public static Instant[] getTimeRangeForQuery(String timeRangeName, int offSet, Instant startTime, Instant endTime) {
@@ -157,29 +156,24 @@ public class MetricHelper {
 
     // Submits a sample query to Athena and returns the execution ID of the query.
     public static String submitAthenaQuery(AthenaClient athenaClient, String query, String outputBucket, String athenaDatabase) {
-        try {
-            // The QueryExecutionContext allows us to set the Database.
-            QueryExecutionContext queryExecutionContext = QueryExecutionContext.builder()
-                    .database(athenaDatabase).build();
+        // The QueryExecutionContext allows us to set the Database.
+        QueryExecutionContext queryExecutionContext = QueryExecutionContext.builder()
+                .database(athenaDatabase).build();
 
-            // The result configuration specifies where the results of the query should go in S3 and encryption options
-            ResultConfiguration resultConfiguration = ResultConfiguration.builder()
-                    // You can provide encryption options for the output that is written.
-                    // .withEncryptionConfiguration(encryptionConfiguration)
-                    .outputLocation(outputBucket).build();
+        // The result configuration specifies where the results of the query should go in S3 and encryption options
+        ResultConfiguration resultConfiguration = ResultConfiguration.builder()
+                // You can provide encryption options for the output that is written.
+                // .withEncryptionConfiguration(encryptionConfiguration)
+                .outputLocation(outputBucket).build();
 
-            // Create the StartQueryExecutionRequest to send to Athena which will start the query.
-            StartQueryExecutionRequest startQueryExecutionRequest = StartQueryExecutionRequest.builder()
-                    .queryString(query)
-                    .queryExecutionContext(queryExecutionContext)
-                    .resultConfiguration(resultConfiguration).build();
+        // Create the StartQueryExecutionRequest to send to Athena which will start the query.
+        StartQueryExecutionRequest startQueryExecutionRequest = StartQueryExecutionRequest.builder()
+                .queryString(query)
+                .queryExecutionContext(queryExecutionContext)
+                .resultConfiguration(resultConfiguration).build();
 
-            StartQueryExecutionResponse startQueryExecutionResponse = athenaClient.startQueryExecution(startQueryExecutionRequest);
-            return startQueryExecutionResponse.queryExecutionId();
-        } catch (AthenaException e) {
-            //LOGGER.error(Utils.getFullStackTrace(e));
-            throw e;
-        }
+        StartQueryExecutionResponse startQueryExecutionResponse = athenaClient.startQueryExecution(startQueryExecutionRequest);
+        return startQueryExecutionResponse.queryExecutionId();
     }
 
     /**

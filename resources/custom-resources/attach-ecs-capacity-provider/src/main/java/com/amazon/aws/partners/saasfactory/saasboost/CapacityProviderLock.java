@@ -16,7 +16,7 @@ public class CapacityProviderLock {
     private static final Logger LOGGER = LoggerFactory.getLogger(CapacityProviderLock.class);
 
     private final DynamoDbClient ddb;
-    private AttributeValue onboardingId = null;
+    private AttributeValue onboardingId;
 
     public CapacityProviderLock(DynamoDbClient ddb) {
         this.ddb = ddb;

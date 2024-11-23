@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class MetricEventBuilder {
     private static final Logger logger = LoggerFactory.getLogger(MetricEventBuilder.class);
-    private MetricEvent metricEvent;
+    private final MetricEvent metricEvent;
 
     public MetricEventBuilder() {
         metricEvent = new MetricEvent();

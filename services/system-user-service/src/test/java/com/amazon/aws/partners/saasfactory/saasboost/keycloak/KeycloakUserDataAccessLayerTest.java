@@ -123,7 +123,7 @@ public final class KeycloakUserDataAccessLayerTest {
         UserRepresentation existingUser = mockKeycloakUser(username);
         UserRepresentation editedUser = mockKeycloakUser(username);
         SystemUser edits = new SystemUser();
-        UnaryOperator<String> alteration = (str) -> "different" + str;
+        UnaryOperator<String> alteration = str -> "different" + str;
         edits.setId(alteration.apply(editedUser.getId()));
         edits.setUsername(alteration.apply(editedUser.getUsername()));
         edits.setFirstName(alteration.apply(editedUser.getFirstName()));

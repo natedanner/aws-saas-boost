@@ -19,7 +19,7 @@ package com.amazon.aws.partners.saasfactory.saasboost;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class CloudFormationEvent {
+public final class CloudFormationEvent {
 
     private final String stackId;
     private final String timestamp;

@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @JsonDeserialize(builder = ApiRequest.Builder.class)
-public class ApiRequest {
+public final class ApiRequest {
 
     private String resource;
     private final SdkHttpMethod method;
@@ -40,7 +40,7 @@ public class ApiRequest {
         if (builder.headers != null) {
             this.headers = Collections.unmodifiableMap(builder.headers);
         } else {
-            this.headers = Collections.unmodifiableMap(Collections.EMPTY_MAP);
+            this.headers = Collections.unmodifiableMap(Collections.emptyMap());
         }
     }
 

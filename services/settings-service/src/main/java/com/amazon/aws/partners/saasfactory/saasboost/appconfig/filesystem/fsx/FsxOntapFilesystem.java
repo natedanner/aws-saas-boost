@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(builder = FsxOntapFilesystem.Builder.class)
-public class FsxOntapFilesystem extends AbstractFsxFilesystem {
+public final class FsxOntapFilesystem extends AbstractFsxFilesystem {
 
     private Map<String, FsxOntapFilesystemTierConfig> tiers;
 

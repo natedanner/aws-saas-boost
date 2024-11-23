@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.Map;
 
 @JsonDeserialize(builder = FsxWindowsFilesystem.Builder.class)
-public class FsxWindowsFilesystem extends AbstractFsxFilesystem {
+public final class FsxWindowsFilesystem extends AbstractFsxFilesystem {
 
     private Map<String, FsxWindowsFilesystemTierConfig> tiers;
 

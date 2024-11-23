@@ -26,39 +26,39 @@ public final class AppConfigHelper {
     }
 
     public static boolean isDomainChanged(AppConfig existing, AppConfig altered) {
-        return ((existing.getDomainName() != null
+        return (existing.getDomainName() != null
                         && !existing.getDomainName().equalsIgnoreCase(altered.getDomainName()))
                 || (altered.getDomainName() != null
-                && !altered.getDomainName().equalsIgnoreCase(existing.getDomainName())));
+                && !altered.getDomainName().equalsIgnoreCase(existing.getDomainName()));
     }
 
     public static boolean isSslArnChanged(AppConfig existing, AppConfig altered) {
-        return ((existing.getSslCertificate() != null
+        return (existing.getSslCertificate() != null
                 && !existing.getSslCertificate().equalsIgnoreCase(altered.getSslCertificate()))
                 || (altered.getSslCertificate() != null
-                && !altered.getSslCertificate().equalsIgnoreCase(existing.getSslCertificate())));
+                && !altered.getSslCertificate().equalsIgnoreCase(existing.getSslCertificate()));
     }
 
     public static boolean isHostedZoneChanged(AppConfig existing, AppConfig altered) {
-        return ((existing.getHostedZone() != null
+        return (existing.getHostedZone() != null
                 && !existing.getHostedZone().equalsIgnoreCase(altered.getHostedZone()))
                 || (altered.getHostedZone() != null
-                && !altered.getHostedZone().equalsIgnoreCase(existing.getHostedZone())));
+                && !altered.getHostedZone().equalsIgnoreCase(existing.getHostedZone()));
     }
 
     public static boolean isBillingChanged(AppConfig existing, AppConfig altered) {
-        return ((existing.getBilling() != null && !existing.getBilling().equals(altered.getBilling()))
-                || (altered.getBilling() != null && !altered.getBilling().equals(existing.getBilling())));
+        return (existing.getBilling() != null && !existing.getBilling().equals(altered.getBilling()))
+                || (altered.getBilling() != null && !altered.getBilling().equals(existing.getBilling()));
     }
 
     public static boolean isBillingFirstTime(AppConfig existing, AppConfig altered) {
-        return ((existing.getBilling() == null || !existing.getBilling().hasApiKey())
-                && (altered.getBilling() != null && altered.getBilling().hasApiKey()));
+        return (existing.getBilling() == null || !existing.getBilling().hasApiKey())
+                && (altered.getBilling() != null && altered.getBilling().hasApiKey());
     }
 
     public static boolean isBillingRemoved(AppConfig existing, AppConfig altered) {
-        return ((existing.getBilling() != null && existing.getBilling().hasApiKey())
-                && (altered.getBilling() == null || !altered.getBilling().hasApiKey()));
+        return (existing.getBilling() != null && existing.getBilling().hasApiKey())
+                && (altered.getBilling() == null || !altered.getBilling().hasApiKey());
     }
 
     public static Set<String> removedServices(AppConfig existing, AppConfig altered) {

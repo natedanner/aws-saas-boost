@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.LinkedHashMap;
 
-public class CloudFormationEventDeserializer {
+public final class CloudFormationEventDeserializer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CloudFormationEventDeserializer.class);
 
